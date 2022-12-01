@@ -1,6 +1,6 @@
 var searchBtn = document.getElementById("searchBtn");
 var searchInput = document.getElementById("searchInput");
-var apiKey = "8a42d43f7d7dc180da5b1e51890e67dc";
+var apiKey = "cee541f4e650cffb718ce2e44ea67925";
 var cityName = document.getElementById("cityName");
 var temp = document.getElementById("temp");
 var humidity = document.getElementById("humidity");
@@ -27,6 +27,7 @@ function getCity() {
     .then((data) => {
       console.log(data);
       displayCurrentWeather(data);
+      saveToLS(data);
     });
 
   fetch(forecastUrl)
@@ -40,20 +41,62 @@ function getCity() {
 }
 
 function displayCurrentWeather(data) {
-  var kelvin = data.main.temp;
-  var farenheit = 1.8 * (kelvin - 273) + 32;
-  var iconCode = data.weather[0].icon;
-  var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-  cityName.textContent = data.name + " " + dayjs().format("MM/DD/YYYY");
-  temp.textContent = "Temperature: " + farenheit.toFixed(2) + "°F";
+  let kelvin = data.main.temp;
+  let fahrenheit = 1.8 * (kelvin - 273) + 32;
+  let iconCode = data.weather[0].icon;
+  let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+  cityName.textContent = data.name + " " + dayjs().format("ddd MM/DD/YYYY");
+  temp.textContent = "Temperature: " + fahrenheit.toFixed(2) + "°F";
   humidity.textContent = "Humidity: " + data.main.humidity + "%";
   wind.textContent = "Wind Speed: " + data.wind.speed + " mph";
   $("#weathericon").attr("src", iconUrl);
 }
 
-function displayForecastWeather() {}
-function saveToLS() {}
-function loadFromLS() {}
-function createHistroyBtn() {}
-//event listeners
+function displayForecastWeather(data) {
+  for (i = 6; i <= 38; i += 8) {
+    let kelvin = data.list[i].main.temp;
+    let fahrenheit = 1.8 * (kelvin - 273) + 32;
+    let iconCode = data.list[i].weather[0].icon;
+    let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+
+    let dateEl = document.createElement("li");
+    let iconEl = document.createElement("img");
+    let tempEl = document.createElement("li");
+    let windEl = document.createElement("li");
+    let humidityEl = document.createElement("li");
+
+    let dateString = data.list[i].dt_txt;
+    let date = moment(dateString);
+
+    dateEl.textContent = date.format("ddd MM/DD/YYYY");
+    iconEl.setAttribute("src", iconUrl);
+    tempEl.textContent = "Temperature: " + fahrenheit.toFixed(2) + "°F";
+    windEl.textContent = "Wind Speed: " + data.list[i].wind.speed + " mph";
+    humidityEl.textContent = "Humidity: " + data.list[i].main.humidity + "%";
+
+    $("#forecast" + i).append(dateEl);
+    $("#forecast" + i).append(iconEl);
+    $("#forecast" + i).append(tempEl);
+    $("#forecast" + i).append(windEl);
+    $("#forecast" + i).append(humidityEl);
+  }
+}
+function saveToLS(data) {
+  localStorage.setItem(data.name, data.name);
+}
+function loadFromLS() {
+  console.log("local storage loaded");
+//     searchInput.value(localStorage.getItem(data.name));
+//     getCity();
+}
+function createHistoryBtn() {
+  for (i=0;i<localStorage.length;i++){
+  let historyButton = document.createElement("button");
+  historyButton.setAttribute("id", "histBtn");
+  historyButton.textContent = localStorage.getItem(localStorage.key(i));
+  $("#history").append(historyButton);
+  }
+}
+// //event listeners
+$("#histBtn").click(loadFromLS());
 searchBtn.addEventListener("click", getCity);
