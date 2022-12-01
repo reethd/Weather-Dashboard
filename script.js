@@ -1,5 +1,4 @@
 var searchBtn = document.getElementById("searchBtn");
-// var histBtn = document.getElementById("histBtn");
 var historyContainer = document.getElementById("history");
 var searchInput = document.getElementById("searchInput");
 var histBtns = document.querySelectorAll(".histBtn");
@@ -9,7 +8,9 @@ var temp = document.getElementById("temp");
 var humidity = document.getElementById("humidity");
 var wind = document.getElementById("wind");
 
-// functions
+// takes user input and inserts it into the API url with the API key for the current weather data as
+// well as forecast weather data. Then fetches both data sets and runs the corresponding display functions.
+// Also resets the search history buttons.
 function getCity() {
   var city = searchInput.value;
   var currentUrl =
@@ -43,9 +44,10 @@ function getCity() {
       console.log(data);
       displayForecastWeather(data);
     });
-
 }
 
+// Converts the temperature data from kelvin to fahrenheit, and pulls data for humidity, wind speed,
+// city name, and the associated weather icon and displays them on the page.
 function displayCurrentWeather(data) {
   let kelvin = data.main.temp;
   let fahrenheit = 1.8 * (kelvin - 273) + 32;
@@ -87,24 +89,29 @@ function displayForecastWeather(data) {
     $("#forecast" + i).append(humidityEl);
   }
 }
+
+// Saves the searched cities to local storage
 function saveToLS(data) {
   localStorage.setItem(data.name, data.name);
 }
 
+// creates buttons for previously searched cities
 function createHistoryBtn() {
   for (i = 0; i < localStorage.length; i++) {
     let historyButton = document.createElement("button");
-    historyButton.setAttribute("class", "histBtn");
+    historyButton.setAttribute("class", "histBtn btn btn-secondary");
     historyButton.setAttribute("id", localStorage.getItem(localStorage.key(i)));
     historyButton.textContent = localStorage.getItem(localStorage.key(i));
     $("#history").append(historyButton);
   }
 }
 
+// when a button for a previously searched city is clicked, this event listener searches that city again
 historyContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("histBtn")) {
     searchInput.value = e.target.innerHTML;
     getCity();
   }
 });
+
 searchBtn.addEventListener("click", getCity);

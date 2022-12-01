@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,11 +11,12 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Weather Tracker</title>
+    <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
     <input id="searchInput" type="text" />
-    <button id="searchBtn">Search</button>
-    <div id="history"></div>
+    <button id="searchBtn" class = "btn btn-info">Search</button>
+    <div id="history" class="btn-group"></div>
     <div id="current">
       <h2 id="cityName"></h2>
       <img src="" id="weathericon" />
