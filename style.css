@@ -30,18 +30,18 @@ ul{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:rgb(46, 122, 79);
     
 }
 .weather-results{
     display: flex;
+    padding-top: 5em;
     align-items: center;
     flex-direction: column;
 }
 
 .forecast-container{
     display: flex;
-    background-color:rgb(46, 122, 79);
-    font-weight: 500;
+    padding-top: 2em;
+   font-weight: 500;
     
 }
