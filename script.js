@@ -33,6 +33,7 @@ function getCity() {
       displayCurrentWeather(data);
       saveToLS(data);
       $(".histBtn").remove();
+      $(".removeRow").remove();
       createHistoryBtn();
     });
 
@@ -73,6 +74,12 @@ function displayForecastWeather(data) {
     let windEl = document.createElement("li");
     let humidityEl = document.createElement("li");
 
+    dateEl.setAttribute("class", "removeRow");
+    tempEl.setAttribute("class", "removeRow");
+    iconEl.setAttribute("class", "removeRow");
+    windEl.setAttribute("class", "removeRow");
+    humidityEl.setAttribute("class", "removeRow");
+
     let dateString = data.list[i].dt_txt;
     let date = moment(dateString);
 
@@ -99,7 +106,7 @@ function saveToLS(data) {
 function createHistoryBtn() {
   for (i = 0; i < localStorage.length; i++) {
     let historyButton = document.createElement("button");
-    historyButton.setAttribute("class", "histBtn btn btn-secondary");
+    historyButton.setAttribute("class", "histBtn btn btn-outline-success");
     historyButton.setAttribute("id", localStorage.getItem(localStorage.key(i)));
     historyButton.textContent = localStorage.getItem(localStorage.key(i));
     $("#history").append(historyButton);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,25 +12,30 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Weather Tracker</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <input id="searchInput" type="text" />
-    <button id="searchBtn" class = "btn btn-info">Search</button>
-    <div id="history" class="btn-group"></div>
-    <div id="current">
-      <h2 id="cityName"></h2>
-      <img src="" id="weathericon" />
-      <h6 id="temp"></h6>
-      <h6 id="humidity"></h6>
-      <h6 id="wind"></h6>
+    <div class="search-bar">
+      <input id="searchInput" type="text" />
+      <button id="searchBtn" class="btn btn-outline-success">Search</button>
     </div>
-    <ul id="forecast6"></ul>
-    <ul id="forecast14"></ul>
-    <ul id="forecast22"></ul>
-    <ul id="forecast30"></ul>
-    <ul id="forecast38"></ul>
-
+    <div id="history" class="btn-group"></div>
+    <section class="weather-results" id="weather-results">
+      <div class="current" id="current">
+        <h2 id="cityName"></h2>
+        <img src="" id="weathericon" />
+        <h6 id="temp"></h6>
+        <h6 id="humidity"></h6>
+        <h6 id="wind"></h6>
+      </div>
+      <div class="forecast-container" id="forecast-container">
+        <ul id="forecast6"></ul>
+        <ul id="forecast14"></ul>
+        <ul id="forecast22"></ul>
+        <ul id="forecast30"></ul>
+        <ul id="forecast38"></ul>
+      </div>
+    </section>
     <script>
       $(document).ready(function () {
         createHistoryBtn();
