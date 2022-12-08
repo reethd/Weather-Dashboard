@@ -24,6 +24,8 @@ function getCity() {
     "&appid=" +
     apiKey;
 
+    $(".removeRow").remove();
+
   fetch(currentUrl)
     .then((response) => {
       return response.json();
@@ -33,7 +35,6 @@ function getCity() {
       displayCurrentWeather(data);
       saveToLS(data);
       $(".histBtn").remove();
-      $(".removeRow").remove();
       createHistoryBtn();
     });
 
